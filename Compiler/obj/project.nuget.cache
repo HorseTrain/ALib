@@ -1,0 +1,15 @@
+{
+  "version": 2,
+  "dgSpecHash": "FzdQuT3QT3M/X2hykeBOoPaWXgQdnpQrDitXjYaaLqI+wuI/lFacNVSsu6vgK/2tOtWAprcSfAC576w0e5Mc9A==",
+  "success": true,
+  "projectFilePath": "E:\\Projects\\Compiler\\Compiler\\Compiler.csproj",
+  "expectedPackageFiles": [
+    "C:\\Users\\Raymond\\.nuget\\packages\\microsoft.csharp\\4.7.0\\microsoft.csharp.4.7.0.nupkg.sha512",
+    "C:\\Users\\Raymond\\.nuget\\packages\\microsoft.netcore.platforms\\1.1.0\\microsoft.netcore.platforms.1.1.0.nupkg.sha512",
+    "C:\\Users\\Raymond\\.nuget\\packages\\mono.posix.netstandard\\1.0.0\\mono.posix.netstandard.1.0.0.nupkg.sha512",
+    "C:\\Users\\Raymond\\.nuget\\packages\\netstandard.library\\2.0.3\\netstandard.library.2.0.3.nupkg.sha512",
+    "C:\\Users\\Raymond\\.nuget\\packages\\sharpdisasm\\1.1.11\\sharpdisasm.1.1.11.nupkg.sha512",
+    "C:\\Users\\Raymond\\.nuget\\packages\\iced\\1.15.0\\iced.1.15.0.nupkg.sha512"
+  ],
+  "logs": []
+}

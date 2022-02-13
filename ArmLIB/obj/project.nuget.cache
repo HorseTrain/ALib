@@ -1,0 +1,32 @@
+{
+  "version": 2,
+  "dgSpecHash": "0LeXb11xWZ9o7bUeDCHNKktddlGe51d7vhCsyfEh8///N506opqx7ijVsGcEfrLHZRQoyarMT91MXLUaIGnnhA==",
+  "success": false,
+  "projectFilePath": "E:\\Projects\\Compiler\\ArmLIB\\ArmLIB.csproj",
+  "expectedPackageFiles": [
+    "C:\\Users\\Raymond\\.nuget\\packages\\microsoft.csharp\\4.7.0\\microsoft.csharp.4.7.0.nupkg.sha512",
+    "C:\\Users\\Raymond\\.nuget\\packages\\mono.posix.netstandard\\1.0.0\\mono.posix.netstandard.1.0.0.nupkg.sha512",
+    "C:\\Users\\Raymond\\.nuget\\packages\\sharpdisasm\\1.1.11\\sharpdisasm.1.1.11.nupkg.sha512",
+    "C:\\Users\\Raymond\\.nuget\\packages\\iced\\1.15.0\\iced.1.15.0.nupkg.sha512"
+  ],
+  "logs": [
+    {
+      "code": "NU1104",
+      "level": "Error",
+      "message": "Unable to find project 'E:\\Projects\\KeystoneNET\\KeystoneNET.csproj'. Check that the project reference is valid and that the project file exists.",
+      "libraryId": "E:\\Projects\\KeystoneNET\\KeystoneNET.csproj",
+      "targetGraphs": [
+        "net6.0"
+      ]
+    },
+    {
+      "code": "NU1104",
+      "level": "Error",
+      "message": "Unable to find project 'E:\\Projects\\Gee.External.Capstone\\Gee.External.Capstone.csproj'. Check that the project reference is valid and that the project file exists.",
+      "libraryId": "E:\\Projects\\Gee.External.Capstone\\Gee.External.Capstone.csproj",
+      "targetGraphs": [
+        "net6.0"
+      ]
+    }
+  ]
+}

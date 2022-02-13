@@ -1,0 +1,57 @@
+{
+  "runtimeTarget": {
+    "name": ".NETCoreApp,Version=v5.0",
+    "signature": ""
+  },
+  "compilationOptions": {},
+  "targets": {
+    ".NETCoreApp,Version=v5.0": {
+      "Compiler/1.0.0": {
+        "dependencies": {
+          "Iced": "1.15.0",
+          "SharpDisasm": "1.1.11"
+        },
+        "runtime": {
+          "Compiler.dll": {}
+        }
+      },
+      "Iced/1.15.0": {
+        "runtime": {
+          "lib/netstandard2.1/Iced.dll": {
+            "assemblyVersion": "1.15.0.0",
+            "fileVersion": "1.15.0.0"
+          }
+        }
+      },
+      "SharpDisasm/1.1.11": {
+        "runtime": {
+          "lib/netstandard2.0/SharpDisasm.dll": {
+            "assemblyVersion": "1.0.0.0",
+            "fileVersion": "1.0.0.0"
+          }
+        }
+      }
+    }
+  },
+  "libraries": {
+    "Compiler/1.0.0": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
+    },
+    "Iced/1.15.0": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-zSMOcs5qL77q4yb4O4cCrnY3/E8TMrKiz9vDvHgpQacs97gtnj2JfU9WoagNgwdn3C07CmEVaaQMxto11Uh5yQ==",
+      "path": "iced/1.15.0",
+      "hashPath": "iced.1.15.0.nupkg.sha512"
+    },
+    "SharpDisasm/1.1.11": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-3y+5A2RZHlHHj3d8SssTKvAr3624xXu3RoWjqkCQ6TE8frYbyj8kxJxjqXh6noLX2mHRbAoPpd1O0Duzv2u+qA==",
+      "path": "sharpdisasm/1.1.11",
+      "hashPath": "sharpdisasm.1.1.11.nupkg.sha512"
+    }
+  }
+}

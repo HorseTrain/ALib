@@ -1,0 +1,47 @@
+{
+  "runtimeTarget": {
+    "name": ".NETCoreApp,Version=v5.0",
+    "signature": ""
+  },
+  "compilationOptions": {},
+  "targets": {
+    ".NETCoreApp,Version=v5.0": {
+      "ALib/1.0.0": {
+        "dependencies": {
+          "Gee.External.Capstone": "2.0.0",
+          "KeystoneNET": "1.0.0"
+        },
+        "runtime": {
+          "ALib.dll": {}
+        }
+      },
+      "Gee.External.Capstone/2.0.0": {
+        "runtime": {
+          "Gee.External.Capstone.dll": {}
+        }
+      },
+      "KeystoneNET/1.0.0": {
+        "runtime": {
+          "KeystoneNET.dll": {}
+        }
+      }
+    }
+  },
+  "libraries": {
+    "ALib/1.0.0": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
+    },
+    "Gee.External.Capstone/2.0.0": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
+    },
+    "KeystoneNET/1.0.0": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
+    }
+  }
+}

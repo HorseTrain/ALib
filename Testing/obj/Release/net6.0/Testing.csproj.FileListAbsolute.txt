@@ -1,0 +1,5 @@
+C:\Users\Raymond\source\repos\Compiler\Testing\obj\Release\net6.0\Testing.csproj.AssemblyReference.cache
+C:\Users\Raymond\source\repos\Compiler\Testing\obj\Release\net6.0\Testing.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\Raymond\source\repos\Compiler\Testing\obj\Release\net6.0\Testing.AssemblyInfoInputs.cache
+C:\Users\Raymond\source\repos\Compiler\Testing\obj\Release\net6.0\Testing.AssemblyInfo.cs
+C:\Users\Raymond\source\repos\Compiler\Testing\obj\Release\net6.0\Testing.csproj.CoreCompileInputs.cache

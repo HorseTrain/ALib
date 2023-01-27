@@ -5,12 +5,12 @@ using ArmLIB.Dissasembler.Aarch64.HighLevel;
 using ArmLIB.Dissasembler.Aarch64.LowLevel;
 using ArmLIB.Emulator;
 using ArmLIB.Emulator.Aarch64;
-using Compiler.Tools.Memory;
+using AlibCompiler.Tools.Memory;
 using Gee.External.Capstone.Arm64;
 using KeystoneNET;
 using System;
 using System.IO;
-using Compiler.Backend;
+using AlibCompiler.Backend;
 using System.Collections.Generic;
 
 namespace ArmLIB
@@ -208,7 +208,7 @@ namespace ArmLIB
             {
                 BasePlusVA bpa = new BasePlusVA(amem);
 
-                Process p = new Process(bpa, new WindowsHeapManager(100UL * 1024UL * 1024UL));
+                ArmProcess p = new ArmProcess(bpa, new WindowsHeapManager(100UL * 1024UL * 1024UL));
 
                 p.TestDisam = true;
 

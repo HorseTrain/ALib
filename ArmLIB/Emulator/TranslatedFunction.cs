@@ -1,5 +1,5 @@
-﻿using Compiler.Backend.X86;
-using Compiler.Tools.Memory;
+﻿using AlibCompiler.Backend.X86;
+using AlibCompiler.Tools.Memory;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -14,11 +14,14 @@ namespace ArmLIB.Emulator
         public ulong NativeAddress                  { get; set; }
         public CompiledFunction NativeFunction      { get; set; }
 
-        public TranslatedFunction(IHostMemoryManager HostMemoryManager, ulong NativeAddress, CompiledFunction NativeFunction )
+        public Allocation allocation                { get; set; }
+
+        public TranslatedFunction(IHostMemoryManager HostMemoryManager, ulong NativeAddress, CompiledFunction NativeFunction, Allocation allocation)
         {
             this.HostMemoryManager = HostMemoryManager;
             this.NativeAddress = NativeAddress;
             this.NativeFunction = NativeFunction;
+            this.allocation = allocation;
         }
 
         public ulong Execute(void* context) => NativeFunction(context);

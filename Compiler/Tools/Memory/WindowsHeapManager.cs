@@ -5,7 +5,7 @@ using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Compiler.Tools.Memory
+namespace AlibCompiler.Tools.Memory
 {
     public unsafe class WindowsHeapManager : IDisposable, IHostMemoryManager
     {
@@ -18,7 +18,7 @@ namespace Compiler.Tools.Memory
         public ulong Size                   { get; set; }
         List<Allocation> Allocations        { get; set; }
 
-        public WindowsHeapManager(ulong AllocationSize, bool FastMode = true)
+        public WindowsHeapManager(ulong AllocationSize, bool FastMode = false)
         {
             Size = AllocationSize;
 
@@ -103,7 +103,7 @@ namespace Compiler.Tools.Memory
                     {
                         (ulong s1, ulong e1) = AllocationRanges[i + 1];
 
-                        if (e0 + Size <= s1)
+                        if (e0 + Size < s1)
                         {
                             return CreateAllocation(e0 + 1, Size, i + 1);
                         }

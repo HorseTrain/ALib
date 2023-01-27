@@ -1,7 +1,7 @@
 ﻿using ArmLIB.Dissasembler.Aarch64.HighLevel;
 using ArmLIB.Emulator.Aarch64.Fallbacks;
-using Compiler.Intermediate;
-using Compiler.Intermediate.Extensions.X86;
+using AlibCompiler.Intermediate;
+using AlibCompiler.Intermediate.Extensions.X86;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -71,7 +71,7 @@ namespace ArmLIB.Emulator.Aarch64.Translation
 
                     Xmm Result = ctx.LocalVector();
 
-                    X86VectorInsert(ctx, Result, n, 3, 0);
+                    Elm(ctx, Result, n, 3, 0);
 
                     ctx.SetVector(opCode.Rd, Result);
                 }
@@ -79,7 +79,7 @@ namespace ArmLIB.Emulator.Aarch64.Translation
                 {
                     Xmm n = ctx.GetVector(opCode.Rn);
 
-                    IOperand Result = X86VectorExtract(ctx, n, 3, 0);
+                    IOperand Result = Elm(ctx, n, 3, 0);
 
                     if (opCode.Size == OpCodeSize.s)
                         Result = ctx.LogicalAnd(Result, Const(uint.MaxValue));
@@ -105,7 +105,7 @@ namespace ArmLIB.Emulator.Aarch64.Translation
 
                 Xmm CurrentD = ctx.GetVector(opCode.Rd);
 
-                X86VectorInsert(ctx, CurrentD, n, (int)opCode.Size, opCode.Index);
+                Elm(ctx, CurrentD, n, (int)opCode.Size, opCode.Index);
 
                 ctx.SetVector(opCode.Rd, CurrentD);
             }
@@ -124,7 +124,7 @@ namespace ArmLIB.Emulator.Aarch64.Translation
                 Xmm d = ctx.GetVector(opCode.Rd);
                 Xmm n = ctx.GetVector(opCode.Rn);
 
-                X86VectorInsert(ctx, d, X86VectorExtract(ctx, n, (int)opCode.Size, opCode.SourceIndex), (int)opCode.Size, opCode.DestinationIndex);
+                Elm(ctx, d, Elm(ctx, n, (int)opCode.Size, opCode.SourceIndex), (int)opCode.Size, opCode.DestinationIndex);
 
                 ctx.SetVector(opCode.Rd, d);
             }
@@ -148,7 +148,7 @@ namespace ArmLIB.Emulator.Aarch64.Translation
                 switch (opCode.Mode)
                 {
                     case SIMDInstructionMode.IntToFloat: n = GetN(ctx); break;
-                    case SIMDInstructionMode.IntToFloatVector: n = X86VectorExtract(ctx, ctx.GetVector(opCode.Rn, true), 3, 0); break;
+                    case SIMDInstructionMode.IntToFloatVector: n = Elm(ctx, ctx.GetVector(opCode.Rn, true), 3, 0); break;
                     default: throw new Exception();
                 }
 
@@ -156,7 +156,7 @@ namespace ArmLIB.Emulator.Aarch64.Translation
 
                 Xmm Result = ctx.LocalVector();
 
-                X86VectorInsert(ctx, Result, ConvertedValue, 3, 0);
+                Elm(ctx, Result, ConvertedValue, 3, 0);
 
                 ctx.SetVector(opCode.Rd, Result);
             }
@@ -182,11 +182,11 @@ namespace ArmLIB.Emulator.Aarch64.Translation
 
                 for (int i = 0; i < iterations; ++i)
                 {
-                    IOperand WorkingWith = X86VectorExtract(ctx, n, size, i);
+                    IOperand WorkingWith = Elm(ctx, n, size, i);
 
                     WorkingWith = Call(ctx, Fallback, WorkingWith, Const(size), Const(size));
 
-                    X86VectorInsert(ctx, result, WorkingWith, size, i);
+                    Elm(ctx, result, WorkingWith, size, i);
                 }
 
                 ctx.SetVector(opCode.Rd, result);
@@ -212,7 +212,7 @@ namespace ArmLIB.Emulator.Aarch64.Translation
                     ctx.EmitX86(opCode.SourceSize == OpCodeSize.s ? X86Instruction.Vmulps : X86Instruction.Vmulpd, n, n, Multiplier);
                 }
 
-                IOperand ConvertedValue = Call(ctx, Fallback, X86VectorExtract(ctx, n, 3, 0), Const((int)opCode.DesSize), Const((int)opCode.SourceSize), Const((int)rounding));
+                IOperand ConvertedValue = Call(ctx, Fallback, Elm(ctx, n, 3, 0), Const((int)opCode.DesSize), Const((int)opCode.SourceSize), Const((int)rounding));
 
                 SetD(ctx, ConvertedValue);
             }

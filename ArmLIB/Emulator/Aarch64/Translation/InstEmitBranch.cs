@@ -1,6 +1,6 @@
 ﻿using ArmLIB.Dissasembler.Aarch64.HighLevel;
-using Compiler.Intermediate;
-using Compiler.Intermediate.Extensions.X86;
+using AlibCompiler.Intermediate;
+using AlibCompiler.Intermediate.Extensions.X86;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -92,7 +92,7 @@ namespace ArmLIB.Emulator.Aarch64.Translation
 
         static void EmitBranchImm(ArmEmitContext ctx, long NewAddress)
         {
-            ctx.CurrentEmitSize = IntSize.Int64;
+            ctx.CurrentEmitSize = OperandType.Int64;
 
             ctx.MarkBranched();
 
@@ -108,7 +108,7 @@ namespace ArmLIB.Emulator.Aarch64.Translation
 
         static void EmitBranchWithConditionImm(ArmEmitContext ctx, IOperand Condition,long BranchingAddress, long LeadingAddress)
         {
-            ctx.CurrentEmitSize = IntSize.Int64;
+            ctx.CurrentEmitSize = OperandType.Int64;
 
             ctx.MarkBranched();
 
@@ -127,7 +127,7 @@ namespace ArmLIB.Emulator.Aarch64.Translation
 
         static unsafe void BranchVariable(ArmEmitContext ctx, IOperand Address)
         {
-            ctx.CurrentEmitSize = IntSize.Int64;
+            ctx.CurrentEmitSize = OperandType.Int64;
 
             if (ctx.process.UseFlt)
             {
@@ -144,7 +144,7 @@ namespace ArmLIB.Emulator.Aarch64.Translation
 
                 IOperand WorkingAddress = ctx.Subtract(Address, Const(fastLookup.Base));
 
-                IOperand JitCacheOffset = Load(ctx, ctx.Add(ctx.FastLookupTable, WorkingAddress), IntSize.Int32);
+                IOperand JitCacheOffset = Load(ctx, ctx.Add(ctx.FastLookupTable, WorkingAddress), OperandType.Int32);
 
                 ctx.JumpIf(End, ctx.CompareEqual(JitCacheOffset, Const(uint.MaxValue)));
 

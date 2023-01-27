@@ -1,6 +1,6 @@
 ﻿using ArmLIB.Dissasembler.Aarch64.HighLevel;
-using Compiler.Intermediate;
-using Compiler.Intermediate.Extensions.X86;
+using AlibCompiler.Intermediate;
+using AlibCompiler.Intermediate.Extensions.X86;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,12 +11,20 @@ namespace ArmLIB.Emulator.Aarch64.Translation
 {
     public static partial class InstEmit64
     {
-        public static void X86VectorInsert(ArmEmitContext ctx,Xmm Result,IOperand Source, int Size, int Index)
+        public static void Elm(ArmEmitContext ctx,Xmm Result,IOperand Source, int Size, int Index)
         {
             if (Size == 3)
-                Source = ctx.ZeroExtend(Source, IntSize.Int64);
+                Source = ctx.ZeroExtend(Source, OperandType.Int64);
             else
-                Source = ctx.ZeroExtend(Source, IntSize.Int32);
+                Source = ctx.ZeroExtend(Source, OperandType.Int32);
+
+            switch (Size)
+            {
+                case 8: Size = 0; break;
+                case 16: Size = 1; break;
+                case 32: Size = 2; break;
+                case 64: Size = 3; break;
+            }
 
             switch (Size)
             {
@@ -28,14 +36,22 @@ namespace ArmLIB.Emulator.Aarch64.Translation
             }
         }
 
-        public static IOperand X86VectorExtract(ArmEmitContext ctx, Xmm Source, int Size, int Index)
+        public static IOperand Elm(ArmEmitContext ctx, Xmm Source, int Size, int Index)
         {
             IOperand Out = ctx.Local();
 
             if (Size == 3)
-                Out = ctx.ZeroExtend(Out, IntSize.Int64);
+                Out = ctx.ZeroExtend(Out, OperandType.Int64);
             else
-                Out = ctx.ZeroExtend(Out, IntSize.Int32);
+                Out = ctx.ZeroExtend(Out, OperandType.Int32);
+
+            switch (Size)
+            {
+                case 8: Size = 0; break;
+                case 16: Size = 1; break;
+                case 32: Size = 2; break;
+                case 64: Size = 3; break;
+            }
 
             switch (Size)
             {
@@ -56,14 +72,14 @@ namespace ArmLIB.Emulator.Aarch64.Translation
             int XmmIndex = Index / MaxSize;
             int InnerIndex = Index & (MaxSize - 1);
 
-            return X86VectorExtract(ctx, Source[XmmIndex], Size, InnerIndex);
+            return Elm(ctx, Source[XmmIndex], Size, InnerIndex);
         }
 
         public static Xmm X86CreateXmmScalar(ArmEmitContext ctx, IOperand Value, OpCodeSize Size)
         {
             Xmm Out = ctx.LocalVector();
 
-            X86VectorInsert(ctx, Out, Value, (int)Size, 0);
+            Elm(ctx, Out, Value, (int)Size, 0);
 
             return Out;
         }

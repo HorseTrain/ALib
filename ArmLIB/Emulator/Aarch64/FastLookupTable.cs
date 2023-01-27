@@ -54,7 +54,7 @@ namespace ArmLIB.Emulator.Aarch64
             if (!InRange(Address))
                 return;
 
-            Process.ValidateInstructionAddress(Address);
+            ArmProcess.ValidateInstructionAddress(Address);
 
             Address -= Base;
 
@@ -68,7 +68,7 @@ namespace ArmLIB.Emulator.Aarch64
             if (!InRange(Address))
                 return uint.MaxValue;
 
-            Process.ValidateInstructionAddress(Address);
+            ArmProcess.ValidateInstructionAddress(Address);
 
             Address -= Base;
 

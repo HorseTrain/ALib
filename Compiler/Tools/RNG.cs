@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Compiler.Tools
+namespace AlibCompiler.Tools
 {
     public static class RNG
     {

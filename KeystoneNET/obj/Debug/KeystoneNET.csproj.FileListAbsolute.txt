@@ -1,0 +1,18 @@
+C:\Users\Raymond\Desktop\TestingALIB\KeystoneNET\bin\Debug\KeystoneNET.dll
+C:\Users\Raymond\Desktop\TestingALIB\KeystoneNET\bin\Debug\KeystoneNET.pdb
+C:\Users\Raymond\Desktop\TestingALIB\KeystoneNET\obj\Debug\KeystoneNET.csproj.AssemblyReference.cache
+C:\Users\Raymond\Desktop\TestingALIB\KeystoneNET\obj\Debug\KeystoneNET.csproj.CoreCompileInputs.cache
+C:\Users\Raymond\Desktop\TestingALIB\KeystoneNET\obj\Debug\KeystoneNET.dll
+C:\Users\Raymond\Desktop\TestingALIB\KeystoneNET\obj\Debug\KeystoneNET.pdb
+C:\Users\lloyd\Desktop\ALIBN\KeystoneNET\bin\Debug\KeystoneNET.dll
+C:\Users\lloyd\Desktop\ALIBN\KeystoneNET\bin\Debug\KeystoneNET.pdb
+C:\Users\lloyd\Desktop\ALIBN\KeystoneNET\obj\Debug\KeystoneNET.csproj.AssemblyReference.cache
+C:\Users\lloyd\Desktop\ALIBN\KeystoneNET\obj\Debug\KeystoneNET.csproj.CoreCompileInputs.cache
+C:\Users\lloyd\Desktop\ALIBN\KeystoneNET\obj\Debug\KeystoneNET.dll
+C:\Users\lloyd\Desktop\ALIBN\KeystoneNET\obj\Debug\KeystoneNET.pdb
+D:\Switch Emulation\ALib\KeystoneNET\bin\Debug\KeystoneNET.dll
+D:\Switch Emulation\ALib\KeystoneNET\bin\Debug\KeystoneNET.pdb
+D:\Switch Emulation\ALib\KeystoneNET\obj\Debug\KeystoneNET.csproj.AssemblyReference.cache
+D:\Switch Emulation\ALib\KeystoneNET\obj\Debug\KeystoneNET.csproj.CoreCompileInputs.cache
+D:\Switch Emulation\ALib\KeystoneNET\obj\Debug\KeystoneNET.dll
+D:\Switch Emulation\ALib\KeystoneNET\obj\Debug\KeystoneNET.pdb

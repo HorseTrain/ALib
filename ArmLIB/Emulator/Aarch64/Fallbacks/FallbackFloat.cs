@@ -1,5 +1,5 @@
 ﻿using ArmLIB.Dissasembler.Aarch64.HighLevel;
-using Compiler.Intermediate;
+using AlibCompiler.Intermediate;
 using System;
 using System.Collections.Generic;
 using System.Linq;

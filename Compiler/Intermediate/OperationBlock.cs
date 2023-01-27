@@ -1,9 +1,9 @@
-﻿using Compiler.Intermediate.Extensions.X86;
+﻿using AlibCompiler.Intermediate.Extensions.X86;
 using SharpDisasm;
 using System.Collections.Generic;
 using System.Text;
 
-namespace Compiler.Intermediate
+namespace AlibCompiler.Intermediate
 {
     public class OperationBlock
     {

@@ -1,12 +1,12 @@
-﻿using Compiler.Intermediate;
-using Compiler.Intermediate.Extensions.X86;
+﻿using AlibCompiler.Intermediate;
+using AlibCompiler.Intermediate.Extensions.X86;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Compiler.Backend.X86
+namespace AlibCompiler.Backend.X86
 {
     public class DebugRegisterAllocator
     {
@@ -85,7 +85,7 @@ namespace Compiler.Backend.X86
 
         void EmitAllocateGp(int Host, int Guest, bool IsLoad)
         {
-            AllocatedCode.Emit(InstructionType.Normal, (int)Instruction.AllocateRegister, new IOperand[] { }, new IOperand[] { IntReg.Create(IntSize.Int64, Host), ConstOperand.Create(Guest), ConstOperand.Create(IsLoad) });
+            AllocatedCode.Emit(InstructionType.Normal, (int)Instruction.AllocateRegister, new IOperand[] { }, new IOperand[] { IntReg.Create(OperandType.Int64, Host), ConstOperand.Create(Guest), ConstOperand.Create(IsLoad) });
         }
 
         void EmitAllocateXmm(int Host, int Guest, bool IsLoad)

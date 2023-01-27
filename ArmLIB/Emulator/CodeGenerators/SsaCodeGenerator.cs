@@ -1,20 +1,23 @@
 ﻿using ArmLIB.Dissasembler.Aarch64.HighLevel;
-using Compiler.Intermediate;
-using Compiler.Intermediate.Extensions.X86;
+using AlibCompiler.Intermediate;
+using AlibCompiler.Intermediate.Extensions.X86;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Numerics;
 using System.Text;
 using System.Threading.Tasks;
+using Mono.Unix.Native;
 
 namespace ArmLIB.Emulator.CodeGenerators
 {
+    public delegate void IfBlock();
+
     public class SsaCodeGenerator
     {
         public OperationBlock ir { get; set; }
 
-        public IntSize CurrentEmitSize { get; set; }
+        public OperandType CurrentEmitSize { get; set; }
         protected int LocalStart { get; set; }
         int LocalCurrent { get; set; }
 
@@ -34,7 +37,7 @@ namespace ArmLIB.Emulator.CodeGenerators
             LocalCurrent = LocalStart;
         }
 
-        public void SetOperandGenerationSize(IntSize Size) => CurrentEmitSize = Size;
+        public void SetOperandGenerationSize(OperandType Size) => CurrentEmitSize = Size;
 
         const int LocalSize = 2;
 
@@ -84,7 +87,7 @@ namespace ArmLIB.Emulator.CodeGenerators
         {
             IntReg Out = Local();
 
-            IntSize Size = Out.Size;
+            OperandType Size = Out.Size;
 
             for (int i = 0; i < Arguments.Length; ++i)
             {
@@ -102,11 +105,11 @@ namespace ArmLIB.Emulator.CodeGenerators
 
             if (Source is ConstOperand c)
             {
-                Source = ConstOperand.Create(c.Data, (IntSize)SourceSize);
+                Source = ConstOperand.Create(c.Data, (OperandType)SourceSize);
             }
             else if (Source is IntReg i)
             {
-                Source = IntReg.Create((IntSize)SourceSize, i.Reg);
+                Source = IntReg.Create((OperandType)SourceSize, i.Reg);
             }
 
             ir.Emit(InstructionType.Normal, (int)Instruction.SignExtend, new IOperand[] { Out }, new IOperand[] { Source });
@@ -162,5 +165,26 @@ namespace ArmLIB.Emulator.CodeGenerators
 
         public void EmitX86(X86Instruction instruction, IOperand Destination, params IOperand[] Sources) => ir.Emit(InstructionType.X86, (int)instruction, new IOperand[] { Destination}, Sources);
         public void EmitX86AS(X86Instruction instruction, params IOperand[] Sources) => ir.Emit(InstructionType.X86, (int)instruction, new IOperand[0], Sources);
+
+        public void If(IOperand Condition, IfBlock Yes, IfBlock No = null)
+        {
+            ConstOperand End = CreateLabel();
+            ConstOperand ConditionPassed = CreateLabel();
+
+            JumpIf(End, ConditionPassed);
+
+            if (No != null)
+            {
+                No();
+            }
+
+            Jump(End);
+
+            MarkLabel(ConditionPassed);
+
+            Yes();
+
+            MarkLabel(End);
+        }
     }
 }

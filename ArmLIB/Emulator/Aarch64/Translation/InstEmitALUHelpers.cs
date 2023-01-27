@@ -1,5 +1,5 @@
 ﻿using ArmLIB.Dissasembler.Aarch64.HighLevel;
-using Compiler.Intermediate;
+using AlibCompiler.Intermediate;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -35,7 +35,7 @@ namespace ArmLIB.Emulator.Aarch64.Translation
                 case IntType.Int16: return ctx.SignExtend16(Source);
                 case IntType.Int32:
                     {
-                        if (ctx.CurrentEmitSize == IntSize.Int32)
+                        if (ctx.CurrentEmitSize == OperandType.Int32)
                             return Source;
 
                         return ctx.SignExtend32(Source);

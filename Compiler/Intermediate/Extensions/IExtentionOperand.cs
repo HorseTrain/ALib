@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Compiler.Intermediate.Extensions
+namespace AlibCompiler.Intermediate.Extensions
 {
     public interface IExtentionOperand : IOperandReg
     {

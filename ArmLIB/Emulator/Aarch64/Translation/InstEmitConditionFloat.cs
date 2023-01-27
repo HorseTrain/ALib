@@ -1,7 +1,7 @@
 ﻿using ArmLIB.Dissasembler.Aarch64.HighLevel;
 using ArmLIB.Emulator.Aarch64.Fallbacks;
-using Compiler.Intermediate;
-using Compiler.Intermediate.Extensions.X86;
+using AlibCompiler.Intermediate;
+using AlibCompiler.Intermediate.Extensions.X86;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -21,8 +21,8 @@ namespace ArmLIB.Emulator.Aarch64.Translation
 
             if (ctx.EnableX86Extentions)
             {
-                IOperand n = X86VectorExtract(ctx, ctx.GetVector(opCode.Rn, true), 3, 0);
-                IOperand m = X86VectorExtract(ctx, ctx.GetVector(opCode.Rm, true), 3, 0);
+                IOperand n = Elm(ctx, ctx.GetVector(opCode.Rn, true), 3, 0);
+                IOperand m = Elm(ctx, ctx.GetVector(opCode.Rm, true), 3, 0);
 
                 IOperand Holds = ConditionHolds(ctx, opCode.cond);
 
@@ -30,7 +30,7 @@ namespace ArmLIB.Emulator.Aarch64.Translation
 
                 Xmm Result = ctx.LocalVector();
 
-                X86VectorInsert(ctx, Result, d, (int)opCode.Size, 0);
+                Elm(ctx, Result, d, (int)opCode.Size, 0);
 
                 ctx.SetVector(opCode.Rd, Result);
             }
@@ -46,8 +46,8 @@ namespace ArmLIB.Emulator.Aarch64.Translation
 
             if (ctx.EnableX86Extentions)
             {
-                IOperand n = X86VectorExtract(ctx, ctx.GetVector(opCode.Rn, true), 3, 0);
-                IOperand m = opCode.WithZero ? Const(0) : X86VectorExtract(ctx, ctx.GetVector(opCode.Rm, true), 3, 0);
+                IOperand n = Elm(ctx, ctx.GetVector(opCode.Rn, true), 3, 0);
+                IOperand m = opCode.WithZero ? Const(0) : Elm(ctx, ctx.GetVector(opCode.Rm, true), 3, 0);
 
                 ConstOperand End = ctx.CreateLabel();
 

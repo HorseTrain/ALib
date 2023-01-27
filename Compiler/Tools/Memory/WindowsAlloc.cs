@@ -1,7 +1,7 @@
 ﻿using System.Runtime.InteropServices;
 using System.Security;
 
-namespace Compiler.Tools.Memory
+namespace AlibCompiler.Tools.Memory
 {
     public static unsafe class WindowsAlloc
     {

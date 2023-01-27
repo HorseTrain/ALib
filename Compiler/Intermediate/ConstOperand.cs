@@ -4,11 +4,11 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Compiler.Intermediate
+namespace AlibCompiler.Intermediate
 {
     public class ConstOperand : IOperand, IOperandSize
     {
-        public IntSize Size { get; set; } = IntSize.Undefined;
+        public OperandType Size { get; set; } = OperandType.Undefined;
         public ulong Data   { get; set; }
 
         public override string ToString() => $"(C: {Data})";
@@ -28,7 +28,7 @@ namespace Compiler.Intermediate
             Data = Source;
         }
 
-        public ConstOperand(ulong Source, IntSize Size)
+        public ConstOperand(ulong Source, OperandType Size)
         {
             Data = Source;
             this.Size = Size;
@@ -38,6 +38,6 @@ namespace Compiler.Intermediate
         public static ConstOperand Create(int Source) => new ConstOperand(Source);
         public static ConstOperand Create(ulong Source) => new ConstOperand(Source);
         public static ConstOperand Create(bool Data) => new ConstOperand(Data ? 1 : 0);
-        public static ConstOperand Create(ulong Data, IntSize Size) => new ConstOperand(Data, Size);
+        public static ConstOperand Create(ulong Data, OperandType Size) => new ConstOperand(Data, Size);
     }
 }

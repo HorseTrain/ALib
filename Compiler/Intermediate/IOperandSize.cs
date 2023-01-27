@@ -4,10 +4,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Compiler.Intermediate
+namespace AlibCompiler.Intermediate
 {
     public interface IOperandSize
     {
-        IntSize Size { get; set; }
+        OperandType Size { get; set; }
     }
 }

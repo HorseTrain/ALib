@@ -19,6 +19,14 @@
           "Compiler.dll": {}
         }
       },
+      "Gee.External.Capstone/2.2.0": {
+        "runtime": {
+          "lib/netstandard2.0/Gee.External.Capstone.dll": {
+            "assemblyVersion": "2.2.0.0",
+            "fileVersion": "2.2.0.0"
+          }
+        }
+      },
       "Microsoft.CSharp/4.7.0": {
         "runtime": {
           "lib/netstandard2.0/Microsoft.CSharp.dll": {
@@ -43,6 +51,9 @@
         }
       },
       "Iced/1.15.0": {
+        "dependencies": {
+          "Gee.External.Capstone": "2.2.0"
+        },
         "runtime": {
           "Iced.dll": {}
         }
@@ -54,6 +65,13 @@
       "type": "project",
       "serviceable": false,
       "sha512": ""
+    },
+    "Gee.External.Capstone/2.2.0": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-gJJF/P0X72UIDbZEyXt3JTCeBFjoPXx3OsTh32/Ktm/PI/aRZa3Rn6L96WTzJ6Hi/Js2bW50zEJPDoYNMuhMYw==",
+      "path": "gee.external.capstone/2.2.0",
+      "hashPath": "gee.external.capstone.2.2.0.nupkg.sha512"
     },
     "Microsoft.CSharp/4.7.0": {
       "type": "package",

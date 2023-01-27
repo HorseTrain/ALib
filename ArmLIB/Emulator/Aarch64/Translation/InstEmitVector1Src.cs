@@ -1,7 +1,7 @@
 ﻿using ArmLIB.Dissasembler.Aarch64.HighLevel;
 using ArmLIB.Emulator.Aarch64.Fallbacks;
-using Compiler.Intermediate;
-using Compiler.Intermediate.Extensions.X86;
+using AlibCompiler.Intermediate;
+using AlibCompiler.Intermediate.Extensions.X86;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -53,7 +53,7 @@ namespace ArmLIB.Emulator.Aarch64.Translation
 
                 for (int i = 0; i < Iterations; ++i)
                 {
-                    X86VectorInsert(ctx, Result, Const(opCode.Imm), (int)opCode.Size, i);
+                    Elm(ctx, Result, Const(opCode.Imm), (int)opCode.Size, i);
                 }
 
                 ctx.SetVector(opCode.Rd, Result);
@@ -72,7 +72,7 @@ namespace ArmLIB.Emulator.Aarch64.Translation
             {
                 Xmm Result = ctx.LocalVector();
 
-                X86VectorInsert(ctx, Result, Const(opCode.Imm), 3, 0);
+                Elm(ctx, Result, Const(opCode.Imm), 3, 0);
 
                 ctx.SetVector(opCode.Rd, Result);
             }
@@ -162,11 +162,11 @@ namespace ArmLIB.Emulator.Aarch64.Translation
 
                 for (int i = 0; i < iterations; ++i)
                 {
-                    IOperand Byte = X86VectorExtract(ctx, n, size, i);
+                    IOperand Byte = Elm(ctx, n, size, i);
 
                     ctx.EmitX86(X86Instruction.Popcnt, Byte, Byte);
 
-                    X86VectorInsert(ctx,result, Byte, size, i);
+                    Elm(ctx,result, Byte, size, i);
                 }
 
                 ctx.SetVector(opCode.Rd, result);
@@ -194,16 +194,16 @@ namespace ArmLIB.Emulator.Aarch64.Translation
 
                 for (int i = 0; i < Iterations; ++i)
                 {
-                    IOperand Source = X86VectorExtract(ctx, n, SourceSize, i);
+                    IOperand Source = Elm(ctx, n, SourceSize, i);
 
-                    Source = ctx.ZeroExtend(Source, IntSize.Int64);
+                    Source = ctx.ZeroExtend(Source, OperandType.Int64);
 
                     Result = ctx.Add(Result, Source);
                 }
 
                 Xmm result = ctx.LocalVector();
 
-                X86VectorInsert(ctx, result, Result, ResultSize, 0);
+                Elm(ctx, result, Result, ResultSize, 0);
 
                 ctx.SetVector(opCode.Rd, result);
             }

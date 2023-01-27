@@ -26,9 +26,12 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\Gee.External.Capstone\Gee.External.Capstone.csproj" />
-    <ProjectReference Include="..\..\KeystoneNET\KeystoneNET.csproj" />
+    <PackageReference Include="Gee.External.Capstone" Version="2.3.0" />
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="..\Compiler\Compiler.csproj" />
+    <ProjectReference Include="..\KeystoneNET\KeystoneNET.csproj" />
   </ItemGroup>
 
 </Project>

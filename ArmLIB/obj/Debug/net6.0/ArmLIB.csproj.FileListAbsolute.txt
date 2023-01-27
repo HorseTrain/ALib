@@ -20,3 +20,23 @@ C:\Users\Raymond\source\repos\Compiler\ArmLIB\obj\Debug\net6.0\ArmLIB.csproj.Cop
 C:\Users\Raymond\source\repos\Compiler\ArmLIB\obj\Debug\net6.0\ArmLIB.dll
 C:\Users\Raymond\source\repos\Compiler\ArmLIB\obj\Debug\net6.0\ref\ArmLIB.dll
 C:\Users\Raymond\source\repos\Compiler\ArmLIB\obj\Debug\net6.0\ArmLIB.pdb
+D:\Switch Emulation\ALib\ArmLIB\bin\Debug\net6.0\ArmLIB.deps.json
+D:\Switch Emulation\ALib\ArmLIB\bin\Debug\net6.0\ArmLIB.dll
+D:\Switch Emulation\ALib\ArmLIB\bin\Debug\net6.0\ArmLIB.pdb
+D:\Switch Emulation\ALib\ArmLIB\bin\Debug\net6.0\Compiler.dll
+D:\Switch Emulation\ALib\ArmLIB\bin\Debug\net6.0\Iced.dll
+D:\Switch Emulation\ALib\ArmLIB\bin\Debug\net6.0\KeystoneNET.dll
+D:\Switch Emulation\ALib\ArmLIB\bin\Debug\net6.0\Compiler.pdb
+D:\Switch Emulation\ALib\ArmLIB\bin\Debug\net6.0\KeystoneNET.pdb
+D:\Switch Emulation\ALib\ArmLIB\bin\Debug\net6.0\Iced.pdb
+D:\Switch Emulation\ALib\ArmLIB\bin\Debug\net6.0\Iced.xml
+D:\Switch Emulation\ALib\ArmLIB\obj\Debug\net6.0\ArmLIB.csproj.AssemblyReference.cache
+D:\Switch Emulation\ALib\ArmLIB\obj\Debug\net6.0\ArmLIB.GeneratedMSBuildEditorConfig.editorconfig
+D:\Switch Emulation\ALib\ArmLIB\obj\Debug\net6.0\ArmLIB.AssemblyInfoInputs.cache
+D:\Switch Emulation\ALib\ArmLIB\obj\Debug\net6.0\ArmLIB.AssemblyInfo.cs
+D:\Switch Emulation\ALib\ArmLIB\obj\Debug\net6.0\ArmLIB.csproj.CoreCompileInputs.cache
+D:\Switch Emulation\ALib\ArmLIB\obj\Debug\net6.0\ArmLIB.csproj.CopyComplete
+D:\Switch Emulation\ALib\ArmLIB\obj\Debug\net6.0\ArmLIB.dll
+D:\Switch Emulation\ALib\ArmLIB\obj\Debug\net6.0\refint\ArmLIB.dll
+D:\Switch Emulation\ALib\ArmLIB\obj\Debug\net6.0\ArmLIB.pdb
+D:\Switch Emulation\ALib\ArmLIB\obj\Debug\net6.0\ref\ArmLIB.dll

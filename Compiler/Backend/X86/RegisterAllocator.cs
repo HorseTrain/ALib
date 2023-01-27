@@ -1,11 +1,11 @@
-﻿using Compiler.Intermediate;
-using Compiler.Intermediate.Extensions.X86;
+﻿using AlibCompiler.Intermediate;
+using AlibCompiler.Intermediate.Extensions.X86;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using static Iced.Intel.AssemblerRegisters;
 
-namespace Compiler.Backend.X86
+namespace AlibCompiler.Backend.X86
 {
     delegate void EmitAllocate(int Host, int Guest, bool IsLoad);
 
@@ -200,7 +200,7 @@ namespace Compiler.Backend.X86
             if (Guest < 0)
                 return;
 
-            AllocatedCode.Emit(InstructionType.Normal, (int)Instruction.AllocateRegister, new IOperand[] { }, new IOperand[] { IntReg.Create(IntSize.Int64, Host), ConstOperand.Create(Guest), ConstOperand.Create(IsLoad) });
+            AllocatedCode.Emit(InstructionType.Normal, (int)Instruction.AllocateRegister, new IOperand[] { }, new IOperand[] { IntReg.Create(OperandType.Int64, Host), ConstOperand.Create(Guest), ConstOperand.Create(IsLoad) });
         }
 
         void EmitAllocateVector(int Host, int Guest, bool IsLoad)

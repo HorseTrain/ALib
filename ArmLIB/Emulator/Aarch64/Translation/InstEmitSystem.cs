@@ -1,5 +1,5 @@
 ﻿using ArmLIB.Dissasembler.Aarch64.HighLevel;
-using Compiler.Intermediate;
+using AlibCompiler.Intermediate;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -26,9 +26,11 @@ namespace ArmLIB.Emulator.Aarch64.Translation
             }
             else
             {
-                ctx.SetRegRaw("svc",Const(opCode.Imm));
+                //ctx.SetRegRaw("svc",Const(opCode.Imm));
 
-                ctx.ReturnWithValue(Const(ctx.CurrentInstruction.Address + 4), ExitReason.Svc);
+                //ctx.ReturnWithValue(Const(ctx.CurrentInstruction.Address + 4), ExitReason.Svc);
+
+                ctx.EmitUndefined();
             }
         }
 

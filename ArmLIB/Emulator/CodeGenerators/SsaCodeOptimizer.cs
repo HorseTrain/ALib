@@ -1,5 +1,5 @@
-﻿using Compiler.Intermediate;
-using Compiler.Intermediate.Extensions.X86;
+﻿using AlibCompiler.Intermediate;
+using AlibCompiler.Intermediate.Extensions.X86;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -368,7 +368,7 @@ namespace ArmLIB.Emulator.CodeGenerators
 
                     BirthAll(i);
 
-                    if (CurrentInstruction.IsInstruction(Compiler.Intermediate.Instruction.JumpIf))
+                    if (CurrentInstruction.IsInstruction(AlibCompiler.Intermediate.Instruction.JumpIf))
                     {
                         List<IOperand> Arguments = GetNewOperands(CurrentInstruction.Sources);
 

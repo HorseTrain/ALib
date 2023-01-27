@@ -1,7 +1,7 @@
-﻿using Compiler.Intermediate;
-using Compiler.Intermediate.Extensions.X86;
-using Compiler.Tools;
-using Compiler.Tools.Memory;
+﻿using AlibCompiler.Intermediate;
+using AlibCompiler.Intermediate.Extensions.X86;
+using AlibCompiler.Tools;
+using AlibCompiler.Tools.Memory;
 using Iced.Intel;
 using System;
 using System.Collections.Generic;
@@ -11,7 +11,7 @@ using System.Runtime.InteropServices;
 using System.Security.Cryptography;
 using static Iced.Intel.AssemblerRegisters;
 
-namespace Compiler.Backend.X86
+namespace AlibCompiler.Backend.X86
 {
     public class X86Assembler
     {
@@ -123,14 +123,14 @@ namespace Compiler.Backend.X86
             return __[r15 + (Index * 8)];
         }
 
-        public static dynamic GetHostRegister(IntSize Size, int Reg)
+        public static dynamic GetHostRegister(OperandType Size, int Reg)
         {
             switch (Size)
             {
-                case IntSize.Int8: return _8[Reg];
-                case IntSize.Int16: return _16[Reg];
-                case IntSize.Int32: return _32[Reg];
-                case IntSize.Int64: return _64[Reg];
+                case OperandType.Int8: return _8[Reg];
+                case OperandType.Int16: return _16[Reg];
+                case OperandType.Int32: return _32[Reg];
+                case OperandType.Int64: return _64[Reg];
                 default: throw new Exception();
             }
         }
@@ -149,7 +149,7 @@ namespace Compiler.Backend.X86
         {
             return;
 
-            IntSize type = (Sources[0] as IntReg).Size;
+            OperandType type = (Sources[0] as IntReg).Size;
 
             for (int i = 0; i < Sources.Length; ++i)
             {
@@ -209,7 +209,7 @@ namespace Compiler.Backend.X86
             return Temp;
         }
 
-        public static unsafe T CompileOperations<T>(OperationBlock block, IHostMemoryManager allocator, ulong GuestAddress,out ulong FunctionAddress) where T : Delegate
+        public static unsafe T CompileOperations<T>(OperationBlock block, IHostMemoryManager allocator, ulong GuestAddress,out ulong FunctionAddress, out Allocation allocation) where T : Delegate
         {
             //Console.WriteLine(block);
 
@@ -221,7 +221,7 @@ namespace Compiler.Backend.X86
 
             //File.WriteAllText($"ir/ir-{GuestAddress:x}.txt", assembler.cfg.Operations.ToString() + "\n" + assembler.Source.ToString() +"\n" + Disam.GetSource(Buffer));
 
-            Allocation allocation = allocator.Allocate((ulong)Buffer.Length);
+            allocation = allocator.Allocate((ulong)Buffer.Length);
 
             FunctionAddress = allocation.RealAddress;
 
@@ -450,18 +450,18 @@ namespace Compiler.Backend.X86
             throw new Exception();
         }
 
-        IntSize PreferedSize;
+        OperandType PreferedSize;
 
-        dynamic GetHostR(int IR, IOperand[] Sources, IntSize Size = (IntSize)(-1))
+        dynamic GetHostR(int IR, IOperand[] Sources, OperandType Size = (OperandType)(-1))
         {
             IOperand Source = Sources[IR];
 
-            if (Size == (IntSize)(-1) && (Source is IOperandSize))
+            if (Size == (OperandType)(-1) && (Source is IOperandSize))
             {
                 Size = (Source as IOperandSize).Size;
             }
 
-            if (Size == IntSize.Undefined)
+            if (Size == OperandType.Undefined)
             {
                 throw new Exception();
             }
@@ -578,7 +578,7 @@ namespace Compiler.Backend.X86
 
             if (CurrentOperation.Sources[0] is ConstOperand cop)
             {
-                c.mov(GetHostR(0, CurrentOperation.Destinations, IntSize.Int64), cop.Data);
+                c.mov(GetHostR(0, CurrentOperation.Destinations, OperandType.Int64), cop.Data);
             }
             else
             {
@@ -627,7 +627,7 @@ namespace Compiler.Backend.X86
             dynamic dReg = GetHostR(0, CurrentOperation.Destinations);
             dynamic source0 = GetHostR(0, CurrentOperation.Sources);
 
-            if (PreferedSize == IntSize.Int32)
+            if (PreferedSize == OperandType.Int32)
             {
                 c.movsxd(dReg, source0);
             }
@@ -641,20 +641,20 @@ namespace Compiler.Backend.X86
         {
             PreferedSize = (CurrentOperation.Sources[0] as IOperandSize).Size;
 
-            IntSize DestinationSize = (CurrentOperation.Destinations[0] as IOperandSize).Size;
+            OperandType DestinationSize = (CurrentOperation.Destinations[0] as IOperandSize).Size;
 
-            dynamic destination64 = GetHostR(0, CurrentOperation.Destinations, IntSize.Int64);
+            dynamic destination64 = GetHostR(0, CurrentOperation.Destinations, OperandType.Int64);
 
             dynamic destination = GetHostR(0, CurrentOperation.Destinations);
             dynamic address = GetHostR(0, CurrentOperation.Sources);
 
             c.mov(destination, __[address]);
 
-            if (DestinationSize == IntSize.Int16)
+            if (DestinationSize == OperandType.Int16)
             {
                 c.and(destination64, 65535);
             }
-            else if (DestinationSize == IntSize.Int8)
+            else if (DestinationSize == OperandType.Int8)
             {
                 c.and(destination64, 255);
             }
@@ -728,7 +728,7 @@ namespace Compiler.Backend.X86
 
         void EmitGetContext()
         {
-            dynamic result = GetHostR(0, CurrentOperation.Destinations, IntSize.Int64);
+            dynamic result = GetHostR(0, CurrentOperation.Destinations, OperandType.Int64);
 
             c.mov(result, r15); 
         }
@@ -739,8 +739,8 @@ namespace Compiler.Backend.X86
 
             EnsureSameIntRegSize(CurrentOperation.Sources[1], CurrentOperation.Sources[2]);
 
-            dynamic result64 = GetHostR(0, CurrentOperation.Destinations, IntSize.Int64);
-            dynamic result8 = GetHostR(0, CurrentOperation.Destinations, IntSize.Int8);
+            dynamic result64 = GetHostR(0, CurrentOperation.Destinations, OperandType.Int64);
+            dynamic result8 = GetHostR(0, CurrentOperation.Destinations, OperandType.Int8);
 
             dynamic address = GetHostR(0, CurrentOperation.Sources);
             dynamic expecting = GetHostR(1, CurrentOperation.Sources);
@@ -815,7 +815,7 @@ namespace Compiler.Backend.X86
 
             if (Signed)
             {
-                if (PreferedSize == IntSize.Int32)
+                if (PreferedSize == OperandType.Int32)
                 {
                     c.cdq();
                 }
@@ -1227,10 +1227,10 @@ namespace Compiler.Backend.X86
 
             dynamic result = GetHostR(0, CurrentOperation.Destinations);
 
-            dynamic is_neg = GetHostR(1, CurrentOperation.Destinations, IntSize.Int8); 
-            dynamic is_zero = GetHostR(2, CurrentOperation.Destinations, IntSize.Int8);
-            dynamic is_carry = GetHostR(3, CurrentOperation.Destinations, IntSize.Int8);
-            dynamic is_overflow = GetHostR(4, CurrentOperation.Destinations, IntSize.Int8);
+            dynamic is_neg = GetHostR(1, CurrentOperation.Destinations, OperandType.Int8); 
+            dynamic is_zero = GetHostR(2, CurrentOperation.Destinations, OperandType.Int8);
+            dynamic is_carry = GetHostR(3, CurrentOperation.Destinations, OperandType.Int8);
+            dynamic is_overflow = GetHostR(4, CurrentOperation.Destinations, OperandType.Int8);
 
             dynamic worker = GetHostRegister(PreferedSize, GetScrappedRegister(typeof(IntReg)));
 

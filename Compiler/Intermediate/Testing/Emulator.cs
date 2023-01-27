@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Compiler.Intermediate.Testing
+namespace AlibCompiler.Intermediate.Testing
 {
     public static class Emulator
     {

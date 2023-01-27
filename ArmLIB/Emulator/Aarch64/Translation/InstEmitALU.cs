@@ -1,6 +1,6 @@
 ﻿using ArmLIB.Dissasembler.Aarch64.HighLevel;
-using Compiler.Intermediate;
-using Compiler.Intermediate.Extensions.X86;
+using AlibCompiler.Intermediate;
+using AlibCompiler.Intermediate.Extensions.X86;
 using System;
 using System.Collections.Generic;
 
@@ -90,13 +90,13 @@ namespace ArmLIB.Emulator.Aarch64.Translation
             SetD(ctx, d);
         }
 
-        static IOperand X86ReverseBytes(ArmEmitContext ctx, IOperand Source, IntSize Size)
+        static IOperand X86ReverseBytes(ArmEmitContext ctx, IOperand Source, OperandType Size)
         {
             IOperand LocalWork = ctx.Copy(Source);
 
             ctx.ir.EmitX86(X86Instruction.Bswap, new IOperand[] { ctx.ZeroExtend(LocalWork, Size) }, new IOperand[0]);
 
-            if (Size <= IntSize.Int16)
+            if (Size <= OperandType.Int16)
             {
                 return ctx.LogicalAnd(LocalWork, Const((8 << (int)Size) - 1));
             }
@@ -278,8 +278,8 @@ namespace ArmLIB.Emulator.Aarch64.Translation
 
             if (ctx.Host == HostArc.X86)
             {
-                IOperand Bottom = X86ReverseBytes(ctx, n, IntSize.Int32);
-                IOperand Top = X86ReverseBytes(ctx, ctx.LogicalShiftRight(n, Const(32)), IntSize.Int32);
+                IOperand Bottom = X86ReverseBytes(ctx, n, OperandType.Int32);
+                IOperand Top = X86ReverseBytes(ctx, ctx.LogicalShiftRight(n, Const(32)), OperandType.Int32);
 
                 SetD(ctx, ctx.LogicalOr(Bottom, ctx.LogicalShiftLeft(Top, Const(32))));
             }
@@ -295,7 +295,7 @@ namespace ArmLIB.Emulator.Aarch64.Translation
 
             IOperand Result = Const(0);
 
-            for (int i = 0; i < (ctx.CurrentEmitSize == IntSize.Int32 ? 2 : 4); ++i)
+            for (int i = 0; i < (ctx.CurrentEmitSize == OperandType.Int32 ? 2 : 4); ++i)
             {
                 IOperand Short = ctx.LogicalShiftRight(n, Const(i * 16));
 

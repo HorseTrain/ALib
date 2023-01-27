@@ -1,7 +1,7 @@
 ﻿using ArmLIB.Dissasembler.Aarch64.HighLevel;
 using ArmLIB.Emulator.CodeGenerators;
-using Compiler.Intermediate;
-using Compiler.Intermediate.Extensions.X86;
+using AlibCompiler.Intermediate;
+using AlibCompiler.Intermediate.Extensions.X86;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -17,7 +17,7 @@ namespace ArmLIB.Emulator.Aarch64.Translation
         public HostArc Host                         { get; set; }
         public AOpCode CurrentInstruction           { get; set; }
         Dictionary<long, ConstOperand> BlockLabels  { get; set; }
-        public Process process                      { get; set; }
+        public ArmProcess process                      { get; set; }
 
         public bool EmulateAtomics                  { get; set; }
         public bool EnableSimd                      { get; set; }
@@ -38,7 +38,7 @@ namespace ArmLIB.Emulator.Aarch64.Translation
         public bool OptimizeSSA                     { get; set; }
         public bool AllowInlineBranching            { get; set; }
 
-        public ArmEmitContext(ArmBasicBlock[] BasicBlocks, Process process, Dictionary<string, int> ContextOffsets, bool OptimizeSSA) : base()
+        public ArmEmitContext(ArmBasicBlock[] BasicBlocks, ArmProcess process, Dictionary<string, int> ContextOffsets, bool OptimizeSSA) : base()
         {
             //context data
             Host = HostArc.X86;
@@ -81,12 +81,12 @@ namespace ArmLIB.Emulator.Aarch64.Translation
 
                 CurrentInstruction = aOpCode;
 
-                CurrentEmitSize = IntSize.Int64;
+                CurrentEmitSize = OperandType.Int64;
 
                 if (aOpCode is IOpCodeALUSize sized)
                 {
                     if (sized.Size == OpCodeSize.w)
-                        CurrentEmitSize = IntSize.Int32;
+                        CurrentEmitSize = OperandType.Int32;
                 }
 
                 if (aOpCode.Emit == null || (IsSimd(aOpCode) && !EnableSimd))
@@ -95,7 +95,7 @@ namespace ArmLIB.Emulator.Aarch64.Translation
 
                     //throw new Exception();
 
-                    CurrentEmitSize = IntSize.Int64;
+                    CurrentEmitSize = OperandType.Int64;
 
                     EmitUndefined();
                 }
@@ -162,7 +162,7 @@ namespace ArmLIB.Emulator.Aarch64.Translation
             Return(LogicalOr(Data, InstEmit64.Const((ulong)ReasonToExit << 48)));
         }
 
-        public IOperand ZeroExtend(IOperand Source, IntSize Size)
+        public IOperand ZeroExtend(IOperand Source, OperandType Size)
         {
             if (Source is ConstOperand c)
                 return ConstOperand.Create(c.Data, Size);

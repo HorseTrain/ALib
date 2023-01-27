@@ -1,29 +1,20 @@
 {
   "version": 2,
-  "dgSpecHash": "KLn8XaHtfVWZYURnjeIgR9QPRUALJwpwDIgMvvZ23ftqKf1HyyXMj6vYZdCKYgqVG8PIPX2lOCyzbJPK+3tpwg==",
+  "dgSpecHash": "d+ZLlcQBol2BBNqQPsSuPT72su/1WnF+8z+16PgsFee8efLEfGKxsE6vVzZ7Zj7aq/FBrP0Ztbqgp+fztS26sw==",
   "success": false,
-  "projectFilePath": "E:\\Projects\\Compiler\\Testing\\Testing.csproj",
+  "projectFilePath": "D:\\Switch Emulation\\ALib\\Testing\\Testing.csproj",
   "expectedPackageFiles": [
-    "C:\\Users\\Raymond\\.nuget\\packages\\microsoft.csharp\\4.7.0\\microsoft.csharp.4.7.0.nupkg.sha512",
-    "C:\\Users\\Raymond\\.nuget\\packages\\mono.posix.netstandard\\1.0.0\\mono.posix.netstandard.1.0.0.nupkg.sha512",
-    "C:\\Users\\Raymond\\.nuget\\packages\\sharpdisasm\\1.1.11\\sharpdisasm.1.1.11.nupkg.sha512",
-    "C:\\Users\\Raymond\\.nuget\\packages\\iced\\1.15.0\\iced.1.15.0.nupkg.sha512"
+    "C:\\Users\\raymo\\.nuget\\packages\\gee.external.capstone\\2.3.0\\gee.external.capstone.2.3.0.nupkg.sha512",
+    "C:\\Users\\raymo\\.nuget\\packages\\microsoft.csharp\\4.7.0\\microsoft.csharp.4.7.0.nupkg.sha512",
+    "C:\\Users\\raymo\\.nuget\\packages\\mono.posix.netstandard\\1.0.0\\mono.posix.netstandard.1.0.0.nupkg.sha512",
+    "C:\\Users\\raymo\\.nuget\\packages\\sharpdisasm\\1.1.11\\sharpdisasm.1.1.11.nupkg.sha512"
   ],
   "logs": [
     {
       "code": "NU1104",
       "level": "Error",
-      "message": "Unable to find project 'E:\\Projects\\KeystoneNET\\KeystoneNET.csproj'. Check that the project reference is valid and that the project file exists.",
-      "libraryId": "E:\\Projects\\KeystoneNET\\KeystoneNET.csproj",
-      "targetGraphs": [
-        "net6.0"
-      ]
-    },
-    {
-      "code": "NU1104",
-      "level": "Error",
-      "message": "Unable to find project 'E:\\Projects\\Gee.External.Capstone\\Gee.External.Capstone.csproj'. Check that the project reference is valid and that the project file exists.",
-      "libraryId": "E:\\Projects\\Gee.External.Capstone\\Gee.External.Capstone.csproj",
+      "message": "Unable to find project 'D:\\Switch Emulation\\ALib\\ARMeilleure\\DCpu.csproj'. Check that the project reference is valid and that the project file exists.",
+      "libraryId": "D:\\Switch Emulation\\ALib\\ARMeilleure\\DCpu.csproj",
       "targetGraphs": [
         "net6.0"
       ]

@@ -1,7 +1,7 @@
 ﻿using ArmLIB.Dissasembler.Aarch64.HighLevel;
 using ArmLIB.Emulator.Aarch64.Fallbacks;
-using Compiler.Intermediate;
-using Compiler.Intermediate.Extensions.X86;
+using AlibCompiler.Intermediate;
+using AlibCompiler.Intermediate.Extensions.X86;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -75,8 +75,8 @@ namespace ArmLIB.Emulator.Aarch64.Translation
             {
                 Xmm Temp = ctx.LocalVector(false);
 
-                X86VectorInsert(ctx, Temp, X86VectorExtract(ctx, n, 3, 0), 3, 0);
-                X86VectorInsert(ctx, Temp, X86VectorExtract(ctx, m, 3, 0), 3, 1);
+                Elm(ctx, Temp, Elm(ctx, n, 3, 0), 3, 0);
+                Elm(ctx, Temp, Elm(ctx, m, 3, 0), 3, 1);
 
                 return new List<Xmm>() { Temp };
             }
@@ -110,17 +110,17 @@ namespace ArmLIB.Emulator.Aarch64.Translation
                 case SIMDOpCodeVector2Src op: Result = ctx.GetVector(op.Rm, true); break;
                 case SIMDOpCodeScalar2SrcElement op:
                     {
-                        IOperand WorkingValue = X86VectorExtract(ctx, ctx.GetVector(op.Rm, false), (int)op.Size, op.Element);
+                        IOperand WorkingValue = Elm(ctx, ctx.GetVector(op.Rm, false), (int)op.Size, op.Element);
 
                         Result = ctx.LocalVector(false);
 
-                        X86VectorInsert(ctx, Result, WorkingValue, (int)op.Size, 0);
+                        Elm(ctx, Result, WorkingValue, (int)op.Size, 0);
 
                     }; break;
 
                 case SIMDOpCodeVector2SrcElement op:
                     {
-                        IOperand WorkingValue = X86VectorExtract(ctx, ctx.GetVector(op.Rm, false), (int)op.Size, op.Element);
+                        IOperand WorkingValue = Elm(ctx, ctx.GetVector(op.Rm, false), (int)op.Size, op.Element);
 
                         Result = ctx.LocalVector(false);
 
@@ -128,7 +128,7 @@ namespace ArmLIB.Emulator.Aarch64.Translation
 
                         for (int i = 0; i < ElementCount; ++i)
                         {
-                            X86VectorInsert(ctx, Result, WorkingValue, (int)op.Size, i);
+                            Elm(ctx, Result, WorkingValue, (int)op.Size, i);
                         }
 
                     } break;
@@ -147,7 +147,7 @@ namespace ArmLIB.Emulator.Aarch64.Translation
 
                 for (int i = 0; i < Iterations; ++i)
                 {
-                    X86VectorInsert(ctx, Negator, Const(MaskImm), (int)size, i);
+                    Elm(ctx, Negator, Const(MaskImm), (int)size, i);
                 }
 
                 Result = ctx.CopyVector(Result);
@@ -183,11 +183,11 @@ namespace ArmLIB.Emulator.Aarch64.Translation
 
             for (int i = 0; i < 2; ++i)
             {
-                IOperand Element = X86VectorExtract(ctx, Source, 3, i);
+                IOperand Element = Elm(ctx, Source, 3, i);
 
                 Element = ctx.Not(Element);
 
-                X86VectorInsert(ctx, Out, Element, 3, i);
+                Elm(ctx, Out, Element, 3, i);
             }
 
             return Out;
@@ -196,7 +196,7 @@ namespace ArmLIB.Emulator.Aarch64.Translation
         static void X86ClearVectorTopIfNeeded(ArmEmitContext ctx, Xmm Source, bool Half)
         {
             if (Half)
-                X86VectorInsert(ctx, Source, Const(0), 3, 1);
+                Elm(ctx, Source, Const(0), 3, 1);
         }
 
         static void X86ScalariseVector(ArmEmitContext ctx, Xmm Source, bool IsSingle)
@@ -205,7 +205,7 @@ namespace ArmLIB.Emulator.Aarch64.Translation
 
             if (IsSingle)
             {
-                X86VectorInsert(ctx, Source, Const(0), 2, 1);
+                Elm(ctx, Source, Const(0), 2, 1);
             }
         }
 
@@ -255,8 +255,8 @@ namespace ArmLIB.Emulator.Aarch64.Translation
 
                 for (int i= 0; i < ImmElementCount; ++i)
                 {
-                    X86VectorInsert(ctx, half, Const(opCode.Size == OpCodeSize.s ? Aarch64DebugAssembler.Convert<uint, float>(0.5f) : Aarch64DebugAssembler.Convert<ulong, double>(0.5)), (int)opCode.Size, i);
-                    X86VectorInsert(ctx, three, Const(opCode.Size == OpCodeSize.s ? Aarch64DebugAssembler.Convert<uint, float>(3.0f) : Aarch64DebugAssembler.Convert<ulong, double>(3.0)), (int)opCode.Size, i);
+                    Elm(ctx, half, Const(opCode.Size == OpCodeSize.s ? Aarch64DebugAssembler.Convert<uint, float>(0.5f) : Aarch64DebugAssembler.Convert<ulong, double>(0.5)), (int)opCode.Size, i);
+                    Elm(ctx, three, Const(opCode.Size == OpCodeSize.s ? Aarch64DebugAssembler.Convert<uint, float>(3.0f) : Aarch64DebugAssembler.Convert<ulong, double>(3.0)), (int)opCode.Size, i);
                 }
 
                 Xmm WorkingResult = ctx.LocalVector(false);
@@ -450,9 +450,9 @@ namespace ArmLIB.Emulator.Aarch64.Translation
 
                     ctx.EmitX86(opCode.Size == OpCodeSize.s ? SingleInstruction : DoubleInstruction, resv, elm0, elm1);
 
-                    IOperand elmRes = X86VectorExtract(ctx, resv, Size, 0);
+                    IOperand elmRes = Elm(ctx, resv, Size, 0);
 
-                    X86VectorInsert(ctx, Result, elmRes, Size, i);
+                    Elm(ctx, Result, elmRes, Size, i);
                 }
 
                 X86ClearVectorTopIfNeeded(ctx, Result, opCode.Half);
@@ -485,8 +485,8 @@ namespace ArmLIB.Emulator.Aarch64.Translation
 
                 for (int p = 0; p < pairs; ++p)
                 {
-                    X86VectorInsert(ctx, result, X86VectorExtract(ctx, n, Size, _base + p), Size, 2 * p);
-                    X86VectorInsert(ctx, result, X86VectorExtract(ctx, m, Size, _base + p), Size, (2 * p) + 1);
+                    Elm(ctx, result, Elm(ctx, n, Size, _base + p), Size, 2 * p);
+                    Elm(ctx, result, Elm(ctx, m, Size, _base + p), Size, (2 * p) + 1);
                 }
 
                 X86ClearVectorTopIfNeeded(ctx, result, opCode.Half);
@@ -516,14 +516,14 @@ namespace ArmLIB.Emulator.Aarch64.Translation
 
                 for (int i = 0; i < Iterations; ++i)
                 {
-                    IOperand n_Extract = ctx.ZeroExtend(X86VectorExtract(ctx, n, Size, i), IntSize.Int64);
-                    IOperand m_Extract = ctx.ZeroExtend(X86VectorExtract(ctx, m, Size, i), IntSize.Int64);
+                    IOperand n_Extract = ctx.ZeroExtend(Elm(ctx, n, Size, i), OperandType.Int64);
+                    IOperand m_Extract = ctx.ZeroExtend(Elm(ctx, m, Size, i), OperandType.Int64);
 
                     IOperandReg Result = ctx.Local();
 
                     ctx.ir.Emit(CompareInstruction, Result, n_Extract, m_Extract);
 
-                    X86VectorInsert(ctx, result, ctx.Subtract(Const(0), Result), Size, i);
+                    Elm(ctx, result, ctx.Subtract(Const(0), Result), Size, i);
                 }
 
                 ctx.SetVector(opCode.Rd, result);
@@ -553,7 +553,7 @@ namespace ArmLIB.Emulator.Aarch64.Translation
                 {
                     int offset = (int)opCode.Imm + i;
 
-                    X86VectorInsert(ctx, result, X86VectorExtract(ctx, Concact, 0, offset), 0, i);
+                    Elm(ctx, result, X86VectorExtract(ctx, Concact, 0, offset), 0, i);
                 }
 
                 ctx.SetVector(opCode.Rd, result);

@@ -1,5 +1,5 @@
 ﻿using ArmLIB.Emulator.Aarch64.Fallbacks;
-using Compiler.Intermediate;
+using AlibCompiler.Intermediate;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -25,7 +25,7 @@ namespace ArmLIB.Emulator.Aarch64.Translation
 
                 IOperand FunctionPointerPointer = ctx.Add(ctx.FunctionTable, Const(Index));
 
-                IOperand FunctionPointer = Load(ctx, FunctionPointerPointer, IntSize.Int64);
+                IOperand FunctionPointer = Load(ctx, FunctionPointerPointer, OperandType.Int64);
 
                 return Call(ctx, FunctionPointer, Arguments);
             }   

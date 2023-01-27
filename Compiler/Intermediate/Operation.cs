@@ -1,4 +1,4 @@
-﻿using Compiler.Intermediate.Extensions.X86;
+﻿using AlibCompiler.Intermediate.Extensions.X86;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -6,7 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Compiler.Intermediate
+namespace AlibCompiler.Intermediate
 {
     public class Operation
     {

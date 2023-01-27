@@ -1,5 +1,5 @@
 ﻿using ArmLIB.Dissasembler.Aarch64.HighLevel;
-using Compiler.Intermediate;
+using AlibCompiler.Intermediate;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -82,7 +82,7 @@ namespace ArmLIB.Emulator.Aarch64.Translation
             return ctx.Add(ctx.MemoryAddress, VirtualAddress);
         }
 
-        public static IOperand Load(ArmEmitContext ctx, IOperand Address, IntSize Size)
+        public static IOperand Load(ArmEmitContext ctx, IOperand Address, OperandType Size)
         {
             IOperand Result = ctx.Local();
 
@@ -91,14 +91,14 @@ namespace ArmLIB.Emulator.Aarch64.Translation
             return Result;
         }
 
-        static unsafe IOperand VirtualLoad(ArmEmitContext ctx, IOperand Address, IntSize Size)
+        static unsafe IOperand VirtualLoad(ArmEmitContext ctx, IOperand Address, OperandType Size)
         {
             Address = TranslateAddress(ctx, Address);
 
-            return ctx.ZeroExtend(Load(ctx, Address, Size), IntSize.Int64);
+            return ctx.ZeroExtend(Load(ctx, Address, Size), OperandType.Int64);
         }
 
-        static unsafe void VirtualStore(ArmEmitContext ctx, IOperand Address, IOperand Value, IntSize Size)
+        static unsafe void VirtualStore(ArmEmitContext ctx, IOperand Address, IOperand Value, OperandType Size)
         {
             Address = TranslateAddress(ctx, Address);
 
@@ -111,7 +111,7 @@ namespace ArmLIB.Emulator.Aarch64.Translation
 
             IOperand Address = GetPointer(ctx);
 
-            IOperand Value = VirtualLoad(ctx, Address, (IntSize)opCode.RawSize);
+            IOperand Value = VirtualLoad(ctx, Address, (OperandType)opCode.RawSize);
 
             if (opCode.SignExtendLoad)
             {
@@ -139,7 +139,7 @@ namespace ArmLIB.Emulator.Aarch64.Translation
 
             IOperand Value = ctx.GetX(opCode.Rt);
 
-            VirtualStore(ctx, Address, Value, (IntSize)opCode.RawSize);
+            VirtualStore(ctx, Address, Value, (OperandType)opCode.RawSize);
         }
 
         static void EmitLoadPair(ArmEmitContext ctx)
@@ -148,8 +148,8 @@ namespace ArmLIB.Emulator.Aarch64.Translation
 
             IOperand Address = GetPointer(ctx);
 
-            IOperand t1 = VirtualLoad(ctx, Address, (IntSize)opCode.RawSize);
-            IOperand t2 = VirtualLoad(ctx, ctx.Add(Address, Const(1 << opCode.RawSize)), (IntSize)opCode.RawSize);
+            IOperand t1 = VirtualLoad(ctx, Address, (OperandType)opCode.RawSize);
+            IOperand t2 = VirtualLoad(ctx, ctx.Add(Address, Const(1 << opCode.RawSize)), (OperandType)opCode.RawSize);
 
             if (opCode.SignExtendLoad)
             {
@@ -167,8 +167,8 @@ namespace ArmLIB.Emulator.Aarch64.Translation
 
             IOperand Address = GetPointer(ctx);
 
-            VirtualStore(ctx, Address, ctx.GetX(opCode.Rt), (IntSize)opCode.RawSize);
-            VirtualStore(ctx, ctx.Add(Address, Const(1 << opCode.RawSize)), ctx.GetX(opCode.Rt2), (IntSize)opCode.RawSize);
+            VirtualStore(ctx, Address, ctx.GetX(opCode.Rt), (OperandType)opCode.RawSize);
+            VirtualStore(ctx, ctx.Add(Address, Const(1 << opCode.RawSize)), ctx.GetX(opCode.Rt2), (OperandType)opCode.RawSize);
         }
 
         static unsafe void LoadEx(ArmEmitContext ctx, bool IsExclusive)
@@ -179,11 +179,11 @@ namespace ArmLIB.Emulator.Aarch64.Translation
             {
                 IOperand Address = GetPointer(ctx);
 
-                IOperand Value = VirtualLoad(ctx, Address, (IntSize)opCode.RawSize);
+                IOperand Value = VirtualLoad(ctx, Address, (OperandType)opCode.RawSize);
 
                 if (IsExclusive)
                 {
-                    ctx.SetRegRaw(ArmEmitContext.ExclusiveAddressString, TranslateAddress(ctx,Address));
+                    ctx.SetRegRaw(ArmEmitContext.ExclusiveAddressString, ctx.LogicalAnd(Address, Const(~63L)));
                     ctx.SetRegRaw(ArmEmitContext.ExclusiveValueString, Value);
                 }
 
@@ -201,24 +201,53 @@ namespace ArmLIB.Emulator.Aarch64.Translation
 
             if (ctx.EmulateAtomics)
             {
+                IOperand Address = GetPointer(ctx);
+
                 if (IsExclusive)
                 {
+                    /*
                     IOperand CasSuccess = ctx.Local();
 
-                    IOperand Address = ctx.GetRegRaw(ArmEmitContext.ExclusiveAddressString);
+                    IOperand ExclusiveAddress = ctx.GetRegRaw(ArmEmitContext.ExclusiveAddressString);
+
+
+
                     IOperand Expecting = ctx.GetRegRaw(ArmEmitContext.ExclusiveValueString);
 
                     IOperand ToSwap = ctx.GetX(opCode.Rt);
 
-                    ctx.ir.Emit(InstructionType.Normal, (int)Instruction.CompareAndSwap, new IOperand[] { CasSuccess }, new IOperand[] { Address, ctx.ZeroExtend(Expecting, (IntSize)opCode.RawSize), ctx.ZeroExtend(ToSwap, (IntSize)opCode.RawSize) });
+                    ctx.ir.Emit(InstructionType.Normal, (int)Instruction.CompareAndSwap, new IOperand[] { CasSuccess }, new IOperand[] { ExclusiveAddress, ctx.ZeroExtend(Expecting, (IntSize)opCode.RawSize), ctx.ZeroExtend(ToSwap, (IntSize)opCode.RawSize) });
 
                     ctx.SetX(opCode.Rs, ctx.ConditionalSelect(CasSuccess, Const(0), Const(1)), false);
+                    */
+
+                    IOperand Mask = Const(~63);
+                    IOperand ExclusiveAddress = ctx.GetRegRaw(ArmEmitContext.ExclusiveAddressString);
+
+                    ctx.If(ctx.CompareEqual(ExclusiveAddress, ctx.LogicalAnd(Address, Mask)),
+
+                        delegate ()
+                        {
+                            IOperand ToSwap = ctx.GetX(opCode.Rt, false);
+                            IOperand Expecting = ctx.GetRegRaw(ArmEmitContext.ExclusiveValueString);
+
+                            IOperand CasSuccess = ctx.Local();
+
+                            ctx.ir.Emit(InstructionType.Normal, (int)Instruction.CompareAndSwap, new IOperand[] { CasSuccess }, new IOperand[] { ExclusiveAddress, ctx.ZeroExtend(Expecting, (OperandType)opCode.RawSize), ctx.ZeroExtend(ToSwap, (OperandType)opCode.RawSize) });
+
+                            ctx.SetX(opCode.Rs, ctx.ConditionalSelect(CasSuccess, Const(0), Const(1)), false);
+                        },
+
+                        delegate ()
+                        {
+                            ctx.SetX(opCode.Rs, Const(1), false);
+                        }
+
+                        );
                 }
                 else
                 {
-                    IOperand Address = GetPointer(ctx);
-
-                    VirtualStore(ctx, Address, ctx.GetX(opCode.Rt), (IntSize)opCode.Size);
+                    VirtualStore(ctx, Address, ctx.GetX(opCode.Rt), (OperandType)opCode.Size);
                 }
             }
             else

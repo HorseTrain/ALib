@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Runtime.InteropServices;
 using System.Text;
 
-namespace Compiler.Tools.Memory
+namespace AlibCompiler.Tools.Memory
 {
     public class AndroidHeapAllocator : IDisposable, IHostMemoryManager
     {

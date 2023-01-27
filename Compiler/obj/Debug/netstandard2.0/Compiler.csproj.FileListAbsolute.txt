@@ -12,3 +12,17 @@ C:\Users\Raymond\source\repos\Compiler\Compiler\obj\Debug\netstandard2.0\Compile
 C:\Users\Raymond\source\repos\Compiler\Compiler\obj\Debug\netstandard2.0\Compiler.csproj.CopyComplete
 C:\Users\Raymond\source\repos\Compiler\Compiler\obj\Debug\netstandard2.0\Compiler.dll
 C:\Users\Raymond\source\repos\Compiler\Compiler\obj\Debug\netstandard2.0\Compiler.pdb
+D:\Switch Emulation\ALib\Compiler\bin\Debug\netstandard2.0\Compiler.deps.json
+D:\Switch Emulation\ALib\Compiler\bin\Debug\netstandard2.0\Compiler.dll
+D:\Switch Emulation\ALib\Compiler\bin\Debug\netstandard2.0\Compiler.pdb
+D:\Switch Emulation\ALib\Compiler\bin\Debug\netstandard2.0\Iced.dll
+D:\Switch Emulation\ALib\Compiler\bin\Debug\netstandard2.0\Iced.pdb
+D:\Switch Emulation\ALib\Compiler\bin\Debug\netstandard2.0\Iced.xml
+D:\Switch Emulation\ALib\Compiler\obj\Debug\netstandard2.0\Compiler.csproj.AssemblyReference.cache
+D:\Switch Emulation\ALib\Compiler\obj\Debug\netstandard2.0\Compiler.GeneratedMSBuildEditorConfig.editorconfig
+D:\Switch Emulation\ALib\Compiler\obj\Debug\netstandard2.0\Compiler.AssemblyInfoInputs.cache
+D:\Switch Emulation\ALib\Compiler\obj\Debug\netstandard2.0\Compiler.AssemblyInfo.cs
+D:\Switch Emulation\ALib\Compiler\obj\Debug\netstandard2.0\Compiler.csproj.CoreCompileInputs.cache
+D:\Switch Emulation\ALib\Compiler\obj\Debug\netstandard2.0\Compiler.csproj.CopyComplete
+D:\Switch Emulation\ALib\Compiler\obj\Debug\netstandard2.0\Compiler.dll
+D:\Switch Emulation\ALib\Compiler\obj\Debug\netstandard2.0\Compiler.pdb

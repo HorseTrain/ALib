@@ -2,6 +2,57 @@
   "version": 3,
   "targets": {
     "net6.0": {
+      "Gee.External.Capstone/2.3.0": {
+        "type": "package",
+        "compile": {
+          "lib/net6.0/Gee.External.Capstone.dll": {
+            "related": ".xml"
+          }
+        },
+        "runtime": {
+          "lib/net6.0/Gee.External.Capstone.dll": {
+            "related": ".xml"
+          }
+        },
+        "runtimeTargets": {
+          "runtimes/linux-arm/native/libcapstone.so": {
+            "assetType": "native",
+            "rid": "linux-arm"
+          },
+          "runtimes/linux-arm64/native/libcapstone.so": {
+            "assetType": "native",
+            "rid": "linux-arm64"
+          },
+          "runtimes/linux-x64/native/libcapstone.so": {
+            "assetType": "native",
+            "rid": "linux-x64"
+          },
+          "runtimes/linux-x86/native/libcapstone.so": {
+            "assetType": "native",
+            "rid": "linux-x86"
+          },
+          "runtimes/osx-arm64/native/libcapstone.dylib": {
+            "assetType": "native",
+            "rid": "osx-arm64"
+          },
+          "runtimes/osx-x64/native/libcapstone.dylib": {
+            "assetType": "native",
+            "rid": "osx-x64"
+          },
+          "runtimes/win-arm64/native/capstone.dll": {
+            "assetType": "native",
+            "rid": "win-arm64"
+          },
+          "runtimes/win-x64/native/capstone.dll": {
+            "assetType": "native",
+            "rid": "win-x64"
+          },
+          "runtimes/win-x86/native/capstone.dll": {
+            "assetType": "native",
+            "rid": "win-x86"
+          }
+        }
+      },
       "Microsoft.CSharp/4.7.0": {
         "type": "package",
         "compile": {
@@ -119,16 +170,58 @@
       "Iced/1.15.0": {
         "type": "project",
         "framework": ".NETStandard,Version=v2.1",
+        "dependencies": {
+          "Gee.External.Capstone": "2.2.0"
+        },
         "compile": {
           "bin/placeholder/Iced.dll": {}
         },
         "runtime": {
           "bin/placeholder/Iced.dll": {}
         }
+      },
+      "KeystoneNET/1.0.0": {
+        "type": "project",
+        "compile": {
+          "bin/placeholder/KeystoneNET.dll": {}
+        },
+        "runtime": {
+          "bin/placeholder/KeystoneNET.dll": {}
+        }
       }
     }
   },
   "libraries": {
+    "Gee.External.Capstone/2.3.0": {
+      "sha512": "2ap/rYmjtzCOT8hxrnEW/QeiOt+paD8iRrIcdKX0cxVwWLFa1e+JDBNeECakmccXrSFeBQuu5AV8SNkipFMMMw==",
+      "type": "package",
+      "path": "gee.external.capstone/2.3.0",
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "gee.external.capstone.2.3.0.nupkg.sha512",
+        "gee.external.capstone.nuspec",
+        "lib/net5.0/Gee.External.Capstone.dll",
+        "lib/net5.0/Gee.External.Capstone.xml",
+        "lib/net6.0/Gee.External.Capstone.dll",
+        "lib/net6.0/Gee.External.Capstone.xml",
+        "lib/net7.0/Gee.External.Capstone.dll",
+        "lib/net7.0/Gee.External.Capstone.xml",
+        "lib/netstandard2.0/Gee.External.Capstone.dll",
+        "lib/netstandard2.0/Gee.External.Capstone.xml",
+        "lib/netstandard2.1/Gee.External.Capstone.dll",
+        "lib/netstandard2.1/Gee.External.Capstone.xml",
+        "runtimes/linux-arm/native/libcapstone.so",
+        "runtimes/linux-arm64/native/libcapstone.so",
+        "runtimes/linux-x64/native/libcapstone.so",
+        "runtimes/linux-x86/native/libcapstone.so",
+        "runtimes/osx-arm64/native/libcapstone.dylib",
+        "runtimes/osx-x64/native/libcapstone.dylib",
+        "runtimes/win-arm64/native/capstone.dll",
+        "runtimes/win-x64/native/capstone.dll",
+        "runtimes/win-x86/native/capstone.dll"
+      ]
+    },
     "Microsoft.CSharp/4.7.0": {
       "sha512": "pTj+D3uJWyN3My70i2Hqo+OXixq3Os2D1nJ2x92FFo6sk8fYS1m1WLNTs0Dc1uPaViH0YvEEwvzddQ7y4rhXmA==",
       "type": "package",
@@ -252,60 +345,59 @@
     },
     "Iced/1.15.0": {
       "type": "project",
-      "path": "D:\\Programming\\Projects\\Emulator\\iced\\src\\csharp\\Intel\\Iced\\Iced.csproj",
-      "msbuildProject": "D:\\Programming\\Projects\\Emulator\\iced\\src\\csharp\\Intel\\Iced\\Iced.csproj"
+      "path": "../../../Programming/Projects/Emulator/iced/src/csharp/Intel/Iced/Iced.csproj",
+      "msbuildProject": "../../../Programming/Projects/Emulator/iced/src/csharp/Intel/Iced/Iced.csproj"
+    },
+    "KeystoneNET/1.0.0": {
+      "type": "project",
+      "path": "../KeystoneNET/KeystoneNET.csproj",
+      "msbuildProject": "../KeystoneNET/KeystoneNET.csproj"
     }
   },
   "projectFileDependencyGroups": {
     "net6.0": [
       "Compiler >= 1.0.0",
-      "E:\\Projects\\Gee.External.Capstone\\Gee.External.Capstone.csproj",
-      "E:\\Projects\\KeystoneNET\\KeystoneNET.csproj"
+      "Gee.External.Capstone >= 2.3.0",
+      "KeystoneNET >= 1.0.0"
     ]
   },
   "packageFolders": {
-    "C:\\Users\\Raymond\\.nuget\\packages\\": {},
-    "E:\\Programs\\VS\\SDK\\NuGetPackages": {},
-    "C:\\Program Files (x86)\\Microsoft\\Xamarin\\NuGet\\": {}
+    "C:\\Users\\raymo\\.nuget\\packages\\": {},
+    "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "E:\\Projects\\Compiler\\ArmLIB\\ArmLIB.csproj",
+      "projectUniqueName": "D:\\Switch Emulation\\ALib\\ArmLIB\\ArmLIB.csproj",
       "projectName": "ArmLIB",
-      "projectPath": "E:\\Projects\\Compiler\\ArmLIB\\ArmLIB.csproj",
-      "packagesPath": "C:\\Users\\Raymond\\.nuget\\packages\\",
-      "outputPath": "E:\\Projects\\Compiler\\ArmLIB\\obj\\",
+      "projectPath": "D:\\Switch Emulation\\ALib\\ArmLIB\\ArmLIB.csproj",
+      "packagesPath": "C:\\Users\\raymo\\.nuget\\packages\\",
+      "outputPath": "D:\\Switch Emulation\\ALib\\ArmLIB\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
-        "E:\\Programs\\VS\\SDK\\NuGetPackages",
-        "C:\\Program Files (x86)\\Microsoft\\Xamarin\\NuGet\\"
+        "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
       ],
       "configFilePaths": [
-        "C:\\Users\\Raymond\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Users\\raymo\\OneDrive\\Desktop\\SwitchEmulation\\Ryujinx\\NuGet.Config",
+        "C:\\Users\\raymo\\AppData\\Roaming\\NuGet\\NuGet.Config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
-        "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config",
-        "C:\\Program Files (x86)\\NuGet\\Config\\Xamarin.Offline.config"
+        "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
       "originalTargetFrameworks": [
         "net6.0"
       ],
       "sources": {
-        "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
         "https://api.nuget.org/v3/index.json": {}
       },
       "frameworks": {
         "net6.0": {
           "targetAlias": "net6.0",
           "projectReferences": {
-            "E:\\Projects\\Compiler\\Compiler\\Compiler.csproj": {
-              "projectPath": "E:\\Projects\\Compiler\\Compiler\\Compiler.csproj"
+            "D:\\Switch Emulation\\ALib\\Compiler\\Compiler.csproj": {
+              "projectPath": "D:\\Switch Emulation\\ALib\\Compiler\\Compiler.csproj"
             },
-            "E:\\Projects\\Gee.External.Capstone\\Gee.External.Capstone.csproj": {
-              "projectPath": "E:\\Projects\\Gee.External.Capstone\\Gee.External.Capstone.csproj"
-            },
-            "E:\\Projects\\KeystoneNET\\KeystoneNET.csproj": {
-              "projectPath": "E:\\Projects\\KeystoneNET\\KeystoneNET.csproj"
+            "D:\\Switch Emulation\\ALib\\KeystoneNET\\KeystoneNET.csproj": {
+              "projectPath": "D:\\Switch Emulation\\ALib\\KeystoneNET\\KeystoneNET.csproj"
             }
           }
         }
@@ -319,13 +411,20 @@
     "frameworks": {
       "net6.0": {
         "targetAlias": "net6.0",
+        "dependencies": {
+          "Gee.External.Capstone": {
+            "target": "Package",
+            "version": "[2.3.0, )"
+          }
+        },
         "imports": [
           "net461",
           "net462",
           "net47",
           "net471",
           "net472",
-          "net48"
+          "net48",
+          "net481"
         ],
         "assetTargetFallback": true,
         "warn": true,
@@ -334,28 +433,8 @@
             "privateAssets": "all"
           }
         },
-        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\6.0.101\\RuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\7.0.102\\RuntimeIdentifierGraph.json"
       }
     }
-  },
-  "logs": [
-    {
-      "code": "NU1104",
-      "level": "Error",
-      "message": "Unable to find project 'E:\\Projects\\KeystoneNET\\KeystoneNET.csproj'. Check that the project reference is valid and that the project file exists.",
-      "libraryId": "E:\\Projects\\KeystoneNET\\KeystoneNET.csproj",
-      "targetGraphs": [
-        "net6.0"
-      ]
-    },
-    {
-      "code": "NU1104",
-      "level": "Error",
-      "message": "Unable to find project 'E:\\Projects\\Gee.External.Capstone\\Gee.External.Capstone.csproj'. Check that the project reference is valid and that the project file exists.",
-      "libraryId": "E:\\Projects\\Gee.External.Capstone\\Gee.External.Capstone.csproj",
-      "targetGraphs": [
-        "net6.0"
-      ]
-    }
-  ]
+  }
 }

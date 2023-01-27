@@ -1,6 +1,6 @@
 ﻿using ArmLIB.Dissasembler.Aarch64.HighLevel;
-using Compiler.Intermediate;
-using Compiler.Intermediate.Extensions.X86;
+using AlibCompiler.Intermediate;
+using AlibCompiler.Intermediate.Extensions.X86;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -25,9 +25,9 @@ namespace ArmLIB.Emulator.Aarch64.Translation
             {
                 Out = ctx.LocalVector();
 
-                IOperand Value = VirtualLoad(ctx, VirtualAddress, (IntSize)Size);
+                IOperand Value = VirtualLoad(ctx, VirtualAddress, (OperandType)Size);
 
-                X86VectorInsert(ctx, Out, Value, Size, 0);
+                Elm(ctx, Out, Value, Size, 0);
             }
             else
             {
@@ -45,9 +45,9 @@ namespace ArmLIB.Emulator.Aarch64.Translation
         {
             if (Size != 4)
             {
-                IOperand ValueToStore = X86VectorExtract(ctx, Vector, Size, 0);
+                IOperand ValueToStore = Elm(ctx, Vector, Size, 0);
 
-                VirtualStore(ctx, VirtualAddress, ValueToStore, (IntSize)Size);
+                VirtualStore(ctx, VirtualAddress, ValueToStore, (OperandType)Size);
             }
             else
             {
@@ -154,9 +154,9 @@ namespace ArmLIB.Emulator.Aarch64.Translation
 
                                 X86ClearVectorTopIfNeeded(ctx, rval, opCode.Half);
 
-                                IOperand Value = VirtualLoad(ctx, Address, (IntSize)opCode.Size);
+                                IOperand Value = VirtualLoad(ctx, Address, (OperandType)opCode.Size);
 
-                                X86VectorInsert(ctx, rval, Value, (int)opCode.Size, e);
+                                Elm(ctx, rval, Value, (int)opCode.Size, e);
 
                                 ctx.SetVector(tt, rval);
 
@@ -170,9 +170,9 @@ namespace ArmLIB.Emulator.Aarch64.Translation
                 {
                     Xmm t = ctx.GetVector(opCode.Rt, true);
 
-                    IOperand Value = VirtualLoad(ctx, Address, (IntSize)opCode.Size);
+                    IOperand Value = VirtualLoad(ctx, Address, (OperandType)opCode.Size);
 
-                    X86VectorInsert(ctx, t, Value, (int)opCode.Size, opCode.Index );
+                    Elm(ctx, t, Value, (int)opCode.Size, opCode.Index );
                 }
             }
             else
